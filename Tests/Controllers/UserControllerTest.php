@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Tests\Omed\Laravel\User\Controllers;
 
-use JWTAuth;
+use Tymon\JWTAuth\JWT;
 use Omed\Laravel\User\Testing\UserManagerTrait;
 use Tests\Omed\Laravel\User\UserTestCase;
 
@@ -30,7 +30,7 @@ class UserControllerTest extends UserTestCase
     public function testIndex()
     {
         $user = $this->generateUserData();
-        $token = JWTAuth::fromUser($user);
+        $token = $this->generateToken($user);
 
         $response = $this->json('GET', route('omed_user.index'), [], [
             'Authorization' => 'Bearer '.$token,

@@ -47,12 +47,13 @@ class UserServiceProvider extends ServiceProvider
             return new PasswordUpdater($encoderFactory);
         });
 
-        $app->bind(UserManager::class, function ($app) {
-            /** @var \Illuminate\Foundation\Application $app */
-            /** @var \Doctrine\Common\Persistence\ManagerRegistry $registry */
-            /** @var \Doctrine\Common\Persistence\ObjectManager $om */
+        $app->bind(UserManager::class, function (Application $app) {
+            /* @var string $userModel */
             $userModel = config('omed_user.models.user');
+            /** @var \Doctrine\Common\Persistence\ManagerRegistry $registry */
             $registry = $app->get(ManagerRegistry::class);
+
+            /* @var \Doctrine\Common\Persistence\ObjectManager $om */
             $om = $registry->getManagerForClass($userModel);
 
             return new UserManager($om);

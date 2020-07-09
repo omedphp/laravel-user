@@ -13,10 +13,22 @@ declare(strict_types=1);
 
 namespace Omed\Laravel\User\Testing;
 
+use Omed\Component\User\Model\UserInterface;
 use Omed\Laravel\User\Services\UserManager;
+use Tymon\JWTAuth\JWT;
 
 trait UserManagerTrait
 {
+    /**
+     * @param UserInterface $user
+     * @return null|string
+     */
+    public function generateToken(UserInterface $user)
+    {
+        $jwt = app()->get(JWT::class);
+        return $jwt->fromUser($user);
+    }
+
     /**
      * @return UserManager
      */
