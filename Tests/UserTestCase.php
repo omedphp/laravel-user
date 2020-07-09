@@ -71,12 +71,6 @@ class UserTestCase extends OrchestraTestCase
         }
         $app['config']->set('doctrine.managers.default.connection', 'sqlite');
         $app['config']->set('doctrine.managers.default.paths', [$defPath]);
-
-        $app['config']->set('auth.model', User::class);
-        $app['config']->set('auth.defaults.guard', 'api');
-        $app['config']->set('auth.guards.api.driver', 'jwt');
-        $app['config']->set('auth.providers.users.model', User::class);
-        $app['config']->set('auth.providers.users.driver', 'doctrine');
     }
 
     protected function setUp(): void

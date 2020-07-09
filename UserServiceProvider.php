@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\ServiceProvider;
 use Omed\Laravel\User\Controllers\AuthController;
 use Omed\Laravel\User\Controllers\UserController;
+use Omed\Laravel\User\Model\User;
 use Omed\Laravel\User\Services\PasswordUpdater;
 use Omed\Laravel\User\Services\UserManager;
 use Symfony\Component\Security\Core\Encoder\EncoderFactory;
@@ -35,8 +36,8 @@ class UserServiceProvider extends ServiceProvider
         }
 
         $app = $this->app;
-
         $this->loadRoutesFrom(__DIR__.'/Resources/config/routes.php');
+        $this->configureDoctrine();
 
         $app->bind(PasswordUpdater::class, function ($app) {
             $encoderFactory = new EncoderFactory(['user' => [
@@ -75,13 +76,24 @@ class UserServiceProvider extends ServiceProvider
             __DIR__.'/Resources/config/user.php',
             'omed_user'
         );
-
-        $config = config('omed_user.doctrine_manager_config');
-        $this->app['config']->set('doctrine.managers.omed_user', $config);
     }
 
     public static function getDoctrineXMLSchemaPath()
     {
         return __DIR__.'/Resources/config/doctrine';
+    }
+
+    private function configureDoctrine()
+    {
+        /* @var \Illuminate\Config\Repository $config */
+        $config = $this->app['config'];
+        $managerConfig = config('omed_user.doctrine_manager_config');
+
+        $config->set('auth.model', User::class);
+        $config->set('auth.defaults.guard', 'api');
+        $config->set('auth.guards.api.driver', 'jwt');
+        $config->set('auth.providers.users.model', User::class);
+        $config->set('auth.providers.users.driver', 'doctrine');
+        $config->set('doctrine.managers.omed_user', $managerConfig);
     }
 }
