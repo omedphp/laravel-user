@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Tests\Omed\Laravel\User;
 
-use Doctrine\Common\Persistence\ManagerRegistry;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ObjectManager;
 use Omed\Component\User\Manager\UserManager;
 use Omed\Laravel\User\Model\User;
 
@@ -28,7 +28,7 @@ class UserServiceProviderTest extends UserTestCase
     public function testBoot(): void
     {
         /** @var ManagerRegistry $registry */
-        $registry = $this->app->get(ManagerRegistry::class);
+        $registry = $this->app->get('registry');
         $om = $registry->getManagerForClass(User::class);
         $this->assertInstanceOf(ObjectManager::class, $om);
     }

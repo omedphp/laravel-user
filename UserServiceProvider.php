@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Omed\Laravel\User;
 
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Hash;
@@ -48,12 +48,12 @@ class UserServiceProvider extends ServiceProvider
         });
 
         $app->bind(UserManager::class, function (Application $app) {
-            /* @var string $userModel */
+            /** @var string $userModel */
             $userModel = config('omed_user.models.user');
-            /** @var \Doctrine\Common\Persistence\ManagerRegistry $registry */
+            /** @var \Doctrine\Persistence\ManagerRegistry $registry */
             $registry = $app->get(ManagerRegistry::class);
 
-            /* @var \Doctrine\Common\Persistence\ObjectManager $om */
+            /** @var \Doctrine\Common\Persistence\ObjectManager $om */
             $om = $registry->getManagerForClass($userModel);
 
             return new UserManager($om);

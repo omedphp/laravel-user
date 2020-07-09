@@ -21,11 +21,13 @@ trait UserManagerTrait
 {
     /**
      * @param UserInterface $user
-     * @return null|string
+     *
+     * @return string|null
      */
     public function generateToken(UserInterface $user)
     {
         $jwt = app()->get(JWT::class);
+
         return $jwt->fromUser($user);
     }
 

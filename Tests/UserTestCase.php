@@ -31,6 +31,7 @@ class UserTestCase extends OrchestraTestCase
 
     protected function refreshDatabase()
     {
+        $registry = app()->get('registry');
         $this->artisan('doctrine:schema:create');
     }
 
@@ -47,8 +48,8 @@ class UserTestCase extends OrchestraTestCase
     protected function getPackageAliases($app)
     {
         return [
-            'EntityManager' => EntityManager::class,
             'Registry' => Registry::class,
+            'EntityManager' => EntityManager::class,
             'Doctrine' => Doctrine::class,
             'JWTAuth' => 'Tymon\JWTAuth\Facades\JWTAuth',
             'JWTFactory' => 'Tymon\JWTAuth\Facades\JWTFactory',
