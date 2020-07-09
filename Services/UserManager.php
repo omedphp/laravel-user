@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Omed\Laravel\User\Services;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Illuminate\Support\Collection;
 use Omed\Component\User\Manager\UserManager as BaseUserManager;
 use Omed\Component\User\Util\CanonicalFieldsUpdater;
@@ -24,7 +24,7 @@ class UserManager extends BaseUserManager
     public function __construct(ObjectManager $om)
     {
         /** @var string $userClass */
-        /** @var \Doctrine\Common\Persistence\ManagerRegistry $registry */
+        /** @var \Doctrine\Persistence\ManagerRegistry $registry */
         $canonicalizer = new Canonicalizer();
         $fieldsUpdater = new CanonicalFieldsUpdater($canonicalizer, $canonicalizer);
         $userClass = config('omed_user.models.user');

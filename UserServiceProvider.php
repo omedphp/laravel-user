@@ -53,7 +53,7 @@ class UserServiceProvider extends ServiceProvider
             /** @var \Doctrine\Persistence\ManagerRegistry $registry */
             $registry = $app->get(ManagerRegistry::class);
 
-            /** @var \Doctrine\Common\Persistence\ObjectManager $om */
+            /** @var \Doctrine\Persistence\ObjectManager $om */
             $om = $registry->getManagerForClass($userModel);
 
             return new UserManager($om);
