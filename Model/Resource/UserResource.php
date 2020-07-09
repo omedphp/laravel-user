@@ -26,6 +26,8 @@ class UserResource extends JsonResource
             'id' => $resource->getId(),
             'username' => $resource->getUsername(),
             'email' => $resource->getEmail(),
+            'created_at' => $resource->getCreatedAt(),
+            'updated_at' => $resource->getUpdatedAt(),
             '_self' => route('omed_user.show', ['omed_user' => $resource->getId()]),
         ];
     }

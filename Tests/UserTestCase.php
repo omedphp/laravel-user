@@ -13,13 +13,13 @@ declare(strict_types=1);
 
 namespace Tests\Omed\Laravel\User;
 
+use LaravelDoctrine\Extensions\GedmoExtensionsServiceProvider;
 use LaravelDoctrine\ORM\DoctrineServiceProvider;
 use LaravelDoctrine\ORM\Facades\Doctrine;
 use LaravelDoctrine\ORM\Facades\EntityManager;
 use LaravelDoctrine\ORM\Facades\Registry;
 use Omed\Component\User\Model\UserInterface;
 use Omed\Laravel\Core\CoreServiceProvider;
-use Omed\Laravel\User\Model\User;
 use Omed\Laravel\User\Testing\UserManagerTrait;
 use Omed\Laravel\User\UserServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
@@ -31,7 +31,7 @@ class UserTestCase extends OrchestraTestCase
 
     protected function refreshDatabase()
     {
-        $registry = app()->get('registry');
+        $this->app['events']->dispatch('doctrine.extensions.booting');
         $this->artisan('doctrine:schema:create');
     }
 
@@ -40,6 +40,7 @@ class UserTestCase extends OrchestraTestCase
         return [
             JWTAuthServiceProvider::class,
             DoctrineServiceProvider::class,
+            GedmoExtensionsServiceProvider::class,
             CoreServiceProvider::class,
             UserServiceProvider::class,
         ];
