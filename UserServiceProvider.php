@@ -13,12 +13,13 @@ declare(strict_types=1);
 
 namespace Omed\Laravel\User;
 
-use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ObjectManager;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\ServiceProvider;
 use LaravelDoctrine\Extensions\Timestamps\TimestampableExtension;
+use LaravelDoctrine\ORM\IlluminateRegistry;
 use Omed\Laravel\User\Controllers\AuthController;
 use Omed\Laravel\User\Controllers\UserController;
 use Omed\Laravel\User\Model\User;
@@ -52,10 +53,10 @@ class UserServiceProvider extends ServiceProvider
         $app->bind(UserManager::class, function (Application $app) {
             /** @var string $userModel */
             $userModel = config('omed_user.models.user');
-            /** @var \Doctrine\Persistence\ManagerRegistry $registry */
-            $registry = $app->get(ManagerRegistry::class);
+            /** @var IlluminateRegistry $registry */
+            $registry = $app->get('registry');
 
-            /** @var \Doctrine\Persistence\ObjectManager $om */
+            /** @var ObjectManager $om */
             $om = $registry->getManagerForClass($userModel);
 
             return new UserManager($om);
