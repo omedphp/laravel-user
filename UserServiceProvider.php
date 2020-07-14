@@ -30,7 +30,8 @@ class UserServiceProvider extends ServiceProvider
 {
     public function boot(Filesystem $filesystem): void
     {
-        if (\function_exists('config_path')) { // function not available and 'publish' not relevant in Lumen
+        if (\function_exists('config_path')) {
+            // function not available and 'publish' not relevant in Lumen
             $this->publishes([
                 __DIR__.'/Resources/config/user.php' => config_path('omed_user.php'),
             ], 'config');
@@ -38,7 +39,6 @@ class UserServiceProvider extends ServiceProvider
 
         $app = $this->app;
         $this->loadRoutesFrom(__DIR__.'/Resources/config/routes.php');
-        $this->configureDoctrine();
 
         $app->bind(PasswordUpdater::class, function ($app) {
             $encoderFactory = new EncoderFactory(['user' => [
@@ -60,6 +60,7 @@ class UserServiceProvider extends ServiceProvider
 
             return new UserManager($om);
         });
+
         $app->alias(UserManager::class, 'omed.managers.user');
 
         Hash::extend('omed_encryption', function (Application $app) {
@@ -77,6 +78,7 @@ class UserServiceProvider extends ServiceProvider
             __DIR__.'/Resources/config/user.php',
             'omed_user'
         );
+        $this->configureDoctrine();
     }
 
     public static function getDoctrineXMLSchemaPath()
@@ -86,7 +88,7 @@ class UserServiceProvider extends ServiceProvider
 
     private function configureDoctrine()
     {
-        /* @var \Illuminate\Config\Repository $config */
+        /** @var \Illuminate\Config\Repository $config */
         $config = $this->app['config'];
         $managerConfig = config('omed_user.doctrine_manager_config');
 
@@ -96,8 +98,12 @@ class UserServiceProvider extends ServiceProvider
         $config->set('auth.providers.users.model', User::class);
         $config->set('auth.providers.users.driver', 'doctrine');
         $config->set('doctrine.managers.omed_user', $managerConfig);
-        $config->set('doctrine.extensions',[
+
+        $extensions = $config->get('doctrine_extensions');
+        $extensions = \is_array($extensions) ? $extensions : [];
+        $extensions = array_merge($extensions, [
             TimestampableExtension::class,
         ]);
+        $config->set('doctrine.extensions', $extensions);
     }
 }

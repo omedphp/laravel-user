@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Tests\Omed\Laravel\User;
 
+use Kilip\Laravel\Alice\AliceServiceProvider;
+use Kilip\Laravel\Alice\Testing\ORM\RefreshDatabaseTrait;
 use LaravelDoctrine\Extensions\GedmoExtensionsServiceProvider;
 use LaravelDoctrine\ORM\DoctrineServiceProvider;
 use LaravelDoctrine\ORM\Facades\Doctrine;
@@ -28,20 +30,22 @@ use Tymon\JWTAuth\Providers\LaravelServiceProvider as JWTAuthServiceProvider;
 class UserTestCase extends OrchestraTestCase
 {
     use UserManagerTrait;
+    use RefreshDatabaseTrait;
 
-    protected function refreshDatabase()
+    protected function setUp(): void
     {
-        $this->app['events']->dispatch('doctrine.extensions.booting');
-        $this->artisan('doctrine:schema:create');
+        parent::setUp();
+        $this->refreshDatabase();
     }
 
     protected function getPackageProviders($app)
     {
         return [
             JWTAuthServiceProvider::class,
-            DoctrineServiceProvider::class,
             GedmoExtensionsServiceProvider::class,
             CoreServiceProvider::class,
+            DoctrineServiceProvider::class,
+            AliceServiceProvider::class,
             UserServiceProvider::class,
         ];
     }
@@ -72,12 +76,10 @@ class UserTestCase extends OrchestraTestCase
         }
         $app['config']->set('doctrine.managers.default.connection', 'sqlite');
         $app['config']->set('doctrine.managers.default.paths', [$defPath]);
-    }
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $this->refreshDatabase();
+        $app['config']->set('alice.doctrine_orm.default.paths', [
+            __DIR__.'/Resources/fixtures',
+        ]);
+        $app['config']->set('alice.doctrine_orm.default.manager', 'omed_user');
     }
 
     /**
@@ -86,12 +88,15 @@ class UserTestCase extends OrchestraTestCase
     protected function generateUserData()
     {
         $manager = $this->getUserManager();
-        $user = $manager->createUser();
-        $user
-            ->setUsername('test')
-            ->setPlainPassword('test')
-            ->setEmail('test@example.com');
-        $manager->storeUser($user);
+        $user = $manager->findByUsername('test');
+        if (null === $user) {
+            $user = $manager->createUser();
+            $user
+                ->setUsername('test')
+                ->setPlainPassword('test')
+                ->setEmail('test@example.com');
+            $manager->storeUser($user);
+        }
 
         return $user;
     }

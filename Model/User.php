@@ -18,20 +18,20 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticableInterface;
 use LaravelDoctrine\Extensions\Timestamps\Timestamps;
 use LaravelDoctrine\ORM\Auth\Authenticatable as AuthenticableTrait;
 use Omed\Component\User\Model\User as BaseUser;
-use Omed\Component\User\Model\UserInterface;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends BaseUser implements AuthenticableInterface, JWTSubject
 {
-    use AuthenticableTrait,Timestamps;
+    use AuthenticableTrait;
+    use Timestamps;
 
     /**
-     * @var null|DateTime
+     * @var DateTime|null
      */
     protected $createdAt;
 
     /**
-     * @var null|DateTime
+     * @var DateTime|null
      */
     protected $updatedAt;
 
@@ -55,11 +55,13 @@ class User extends BaseUser implements AuthenticableInterface, JWTSubject
 
     /**
      * @param DateTime|null $createdAt
+     *
      * @return User
      */
-    public function setCreatedAt(?DateTime $createdAt): User
+    public function setCreatedAt(?DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
+
         return $this;
     }
 
@@ -73,11 +75,13 @@ class User extends BaseUser implements AuthenticableInterface, JWTSubject
 
     /**
      * @param DateTime|null $updatedAt
+     *
      * @return User
      */
-    public function setUpdatedAt(?DateTime $updatedAt): User
+    public function setUpdatedAt(?DateTime $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
         return $this;
     }
 }

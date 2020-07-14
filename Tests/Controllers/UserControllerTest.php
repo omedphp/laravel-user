@@ -37,4 +37,10 @@ class UserControllerTest extends UserTestCase
 
         $response->assertStatus(200);
     }
+
+    public function testFoo()
+    {
+        $users = $this->getUserManager()->findAll();
+        $this->assertCount(1, $users);
+    }
 }

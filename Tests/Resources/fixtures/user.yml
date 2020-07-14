@@ -1,0 +1,5 @@
+Omed\Laravel\User\Model\User:
+  user1:
+    username: admin
+    email: admin@example.com
+    plainPassword: test
