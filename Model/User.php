@@ -35,6 +35,14 @@ class User extends BaseUser implements AuthenticableInterface, JWTSubject
      */
     protected $updatedAt;
 
+    /**
+     * @return string|null
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
     public function getJWTIdentifier()
     {
         return $this->getId();

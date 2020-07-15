@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace Omed\Laravel\User\Controllers;
 
+use Omed\Laravel\User\Model\Resource\UserResource;
+use Omed\Laravel\User\Services\UserManager;
+
 class AuthController extends Controller
 {
     /**
@@ -42,11 +45,13 @@ class AuthController extends Controller
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @param UserManager $manager
+     *
+     * @return UserResource
      */
-    public function me()
+    public function me(UserManager $manager)
     {
-        return response()->json(auth()->user());
+        return new UserResource(auth()->user());
     }
 
     /**

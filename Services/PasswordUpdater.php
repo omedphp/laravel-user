@@ -14,16 +14,10 @@ declare(strict_types=1);
 namespace Omed\Laravel\User\Services;
 
 use Illuminate\Contracts\Hashing\Hasher as HasherContract;
-use Omed\Component\User\Model\UserInterface;
 use Omed\Component\User\Util\PasswordUpdater as BasePasswordUpdater;
 
 class PasswordUpdater extends BasePasswordUpdater implements HasherContract
 {
-    /**
-     * @var UserInterface
-     */
-    private $user;
-
     public function info($hashedValue)
     {
         return password_get_info($hashedValue);
