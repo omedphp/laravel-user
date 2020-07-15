@@ -11,12 +11,12 @@
 
 declare(strict_types=1);
 
-namespace Tests\Omed\Laravel\User\Services;
+namespace Omed\Laravel\User\Tests\Services;
 
 use Omed\Laravel\User\Services\PasswordUpdater;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
-use Tests\Omed\Laravel\User\UserTestCase as TestCase;
+use Omed\Laravel\User\Tests\UserTestCase as TestCase;
 
 class PasswordUpdaterTest extends TestCase
 {

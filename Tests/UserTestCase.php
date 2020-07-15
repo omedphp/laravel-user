@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Omed\Laravel\User;
+namespace Omed\Laravel\User\Tests;
 
 use Kilip\Laravel\Alice\AliceServiceProvider;
 use Kilip\Laravel\Alice\Testing\ORM\RefreshDatabaseTrait;

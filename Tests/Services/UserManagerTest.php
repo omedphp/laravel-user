@@ -11,10 +11,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Omed\Laravel\User\Services;
+namespace Omed\Laravel\User\Tests\Services;
 
 use Omed\Laravel\User\Services\UserManager;
-use Tests\Omed\Laravel\User\UserTestCase;
+use Omed\Laravel\User\Tests\UserTestCase;
 
 class UserManagerTest extends UserTestCase
 {

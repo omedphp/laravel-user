@@ -11,10 +11,10 @@
 
 declare(strict_types=1);
 
-namespace Tests\Omed\Laravel\User\Controllers;
+namespace Omed\Laravel\User\Tests\Controllers;
 
 use Omed\Laravel\User\Testing\UserManagerTrait;
-use Tests\Omed\Laravel\User\UserTestCase;
+use Omed\Laravel\User\Tests\UserTestCase;
 
 class UserControllerTest extends UserTestCase
 {

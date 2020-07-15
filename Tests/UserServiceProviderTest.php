@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Omed\Laravel\User;
+namespace Omed\Laravel\User\Tests;
 
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;

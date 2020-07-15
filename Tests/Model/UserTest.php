@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Omed\Laravel\User\Model;
+namespace Omed\Laravel\User\Tests\Model;
 
 use Omed\Laravel\User\Model\User;
 use PHPUnit\Framework\TestCase;
