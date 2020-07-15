@@ -18,10 +18,9 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\ServiceProvider;
-use LaravelDoctrine\Extensions\Timestamps\TimestampableExtension;
 use LaravelDoctrine\ORM\IlluminateRegistry;
 use Omed\Component\User\Manager\UserManagerInterface;
-use Omed\Laravel\Auth\Controller\AuthController;
+use Omed\Laravel\Security\Controller\AuthController;
 use Omed\Laravel\User\Controllers\UserController;
 use Omed\Laravel\User\Model\User;
 use Omed\Laravel\User\Services\PasswordUpdater;
@@ -101,12 +100,5 @@ class UserServiceProvider extends ServiceProvider
         $config->set('auth.providers.users.model', User::class);
         $config->set('auth.providers.users.driver', 'doctrine');
         $config->set('doctrine.managers.omed_user', $managerConfig);
-
-        $extensions = $config->get('doctrine_extensions');
-        $extensions = \is_array($extensions) ? $extensions : [];
-        $extensions = array_merge($extensions, [
-            TimestampableExtension::class,
-        ]);
-        $config->set('doctrine.extensions', $extensions);
     }
 }

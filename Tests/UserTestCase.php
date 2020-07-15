@@ -21,14 +21,14 @@ use LaravelDoctrine\ORM\Facades\Doctrine;
 use LaravelDoctrine\ORM\Facades\EntityManager;
 use LaravelDoctrine\ORM\Facades\Registry;
 use Omed\Component\User\Model\UserInterface;
-use Omed\Laravel\Core\CoreServiceProvider;
+use Omed\Laravel\ORM\ORMServiceProvider;
 use Omed\Laravel\User\Testing\UserManagerTrait;
-use Omed\Laravel\User\UserEventServiceProvider;
+use Omed\Laravel\Security\SecurityEventServiceProvider;
 use Omed\Laravel\User\UserServiceProvider;
-use Orchestra\Testbench\TestCase as OrchestraTestCase;
+use Omed\Laravel\ORM\Testing\ORMTestCase;
 use Tymon\JWTAuth\Providers\LaravelServiceProvider as JWTAuthServiceProvider;
 
-class UserTestCase extends OrchestraTestCase
+class UserTestCase extends ORMTestCase
 {
     use UserManagerTrait;
     use RefreshDatabaseTrait;
@@ -44,11 +44,11 @@ class UserTestCase extends OrchestraTestCase
         return [
             JWTAuthServiceProvider::class,
             GedmoExtensionsServiceProvider::class,
-            CoreServiceProvider::class,
+            ORMServiceProvider::class,
             DoctrineServiceProvider::class,
             AliceServiceProvider::class,
             UserServiceProvider::class,
-            UserEventServiceProvider::class
+            SecurityEventServiceProvider::class
         ];
     }
 
