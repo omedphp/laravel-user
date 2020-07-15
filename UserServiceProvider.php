@@ -20,7 +20,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\ServiceProvider;
 use LaravelDoctrine\Extensions\Timestamps\TimestampableExtension;
 use LaravelDoctrine\ORM\IlluminateRegistry;
-use Omed\Laravel\User\Controllers\AuthController;
+use Omed\Component\User\Manager\UserManagerInterface;
+use Omed\Laravel\Auth\Controller\AuthController;
 use Omed\Laravel\User\Controllers\UserController;
 use Omed\Laravel\User\Model\User;
 use Omed\Laravel\User\Services\PasswordUpdater;
@@ -63,6 +64,7 @@ class UserServiceProvider extends ServiceProvider
         });
 
         $app->alias(UserManager::class, 'omed.managers.user');
+        $app->alias(UserManager::class, UserManagerInterface::class);
 
         Hash::extend('omed_encryption', function (Application $app) {
             return $app->get(PasswordUpdater::class);
