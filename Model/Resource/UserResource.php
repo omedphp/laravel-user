@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Omed\Laravel\User\Model\Resource;
 
-use Illuminate\Http\Resources\Json\JsonResource;
 use Doctrine\Common\Inflector\Inflector;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResource extends JsonResource
 {
@@ -24,7 +24,7 @@ class UserResource extends JsonResource
         'token',
         'identifier',
         'jwt',
-        'canonical'
+        'canonical',
     ];
 
     public function toArray($request)
@@ -34,16 +34,16 @@ class UserResource extends JsonResource
         $retVal = [];
 
         $r = new \ReflectionObject($resource);
-        foreach($r->getMethods(\ReflectionMethod::IS_PUBLIC) as $method){
+        foreach ($r->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
             $name = $method->getName();
-            $key = strtr($name,[
+            $key = strtr($name, [
                 'get' => '',
                 'is' => '',
             ]);
 
-            if($this->validateProperties($name)){
+            if ($this->validateProperties($name)) {
                 $key = Inflector::camelize($key);
-                $retVal[$key] = call_user_func([$resource, $name]);
+                $retVal[$key] = \call_user_func([$resource, $name]);
             }
         }
 
@@ -54,19 +54,20 @@ class UserResource extends JsonResource
 
     protected function validateProperties($name)
     {
-        if(
+        if (
             false === strpos($name, 'get')
             && false == strpos($name, 'is')
-        ){
+        ) {
             return false;
         }
 
         $lower = strtolower($name);
-        foreach($this->keywordFilters as $filter){
-            if(false !== strpos($lower,$filter)){
+        foreach ($this->keywordFilters as $filter) {
+            if (false !== strpos($lower, $filter)) {
                 return false;
             }
         }
+
         return true;
     }
 }

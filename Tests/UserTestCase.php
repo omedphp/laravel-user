@@ -22,10 +22,10 @@ use LaravelDoctrine\ORM\Facades\EntityManager;
 use LaravelDoctrine\ORM\Facades\Registry;
 use Omed\Component\User\Model\UserInterface;
 use Omed\Laravel\ORM\ORMServiceProvider;
-use Omed\Laravel\User\Testing\UserManagerTrait;
-use Omed\Laravel\Security\SecurityEventServiceProvider;
-use Omed\Laravel\User\UserServiceProvider;
 use Omed\Laravel\ORM\Testing\ORMTestCase;
+use Omed\Laravel\User\SecurityEventServiceProvider;
+use Omed\Laravel\User\Testing\UserManagerTrait;
+use Omed\Laravel\User\UserServiceProvider;
 use Tymon\JWTAuth\Providers\LaravelServiceProvider as JWTAuthServiceProvider;
 
 class UserTestCase extends ORMTestCase
@@ -48,7 +48,7 @@ class UserTestCase extends ORMTestCase
             DoctrineServiceProvider::class,
             AliceServiceProvider::class,
             UserServiceProvider::class,
-            SecurityEventServiceProvider::class
+            SecurityEventServiceProvider::class,
         ];
     }
 

@@ -13,8 +13,12 @@ declare(strict_types=1);
 
 namespace Omed\Laravel\User;
 
-class UserEvent
+use Illuminate\Foundation\Support\Providers\EventServiceProvider as BaseEventServiceProvider;
+use Omed\Laravel\User\Listener\SecurityEventSubscriber;
+
+class SecurityEventServiceProvider extends BaseEventServiceProvider
 {
-    public const LOGGED_IN = 'omed.user.login';
-    public const LOGGED_OUT = 'omed.user.logout';
+    protected $subscribe = [
+        SecurityEventSubscriber::class,
+    ];
 }
