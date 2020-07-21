@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Omed\Laravel\User\Http\Resources;
 
-use Doctrine\Inflector\Inflector;
 use Omed\Laravel\Core\Http\Resources\JsonResource as JsonResource;
 
 class UserResource extends JsonResource
@@ -28,6 +27,7 @@ class UserResource extends JsonResource
 
     /**
      * @param object $resource
+     *
      * @return string
      */
     protected function getSelfRoute($resource)

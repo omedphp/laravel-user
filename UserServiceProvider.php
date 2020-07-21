@@ -21,7 +21,6 @@ use Kilip\SanctumORM\Contracts\SanctumUserInterface;
 use LaravelDoctrine\ORM\IlluminateRegistry;
 use Omed\Component\User\Manager\UserManagerInterface;
 use Omed\Component\User\UserComponent;
-use Omed\Laravel\Security\Controller\AuthController;
 use Omed\Laravel\User\Http\Controllers\UserController;
 use Omed\Laravel\User\Model\User;
 use Omed\Laravel\User\Services\PasswordUpdater;

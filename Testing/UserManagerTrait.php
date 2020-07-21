@@ -15,14 +15,14 @@ namespace Omed\Laravel\User\Testing;
 
 use Kilip\SanctumORM\Contracts\SanctumUserInterface;
 use Kilip\SanctumORM\Manager\TokenManagerInterface;
-use Omed\Component\User\Model\UserInterface;
 use Omed\Laravel\User\Services\UserManager;
 
 trait UserManagerTrait
 {
     /**
-     * @return UserManager
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     *
+     * @return UserManager
      */
     public function getUserManager()
     {
@@ -39,8 +39,8 @@ trait UserManagerTrait
 
     /**
      * @param SanctumUserInterface $user
-     * @param string $name
-     * @param array $abilities
+     * @param string               $name
+     * @param array                $abilities
      *
      * @return \Kilip\SanctumORM\Security\NewAccessToken
      */

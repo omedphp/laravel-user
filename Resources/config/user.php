@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 return [
     'route_prefix' => [
-        'user' => 'users'
+        'user' => 'users',
     ],
     'models' => [
         'user' => \Omed\Laravel\User\Model\User::class,

@@ -14,8 +14,6 @@ declare(strict_types=1);
 namespace Omed\Laravel\User\Model;
 
 use DateTime;
-use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Contracts\Support\Jsonable;
 use Kilip\SanctumORM\Contracts\SanctumUserInterface;
 use Kilip\SanctumORM\Model\SanctumUserTrait;
 use LaravelDoctrine\Extensions\Timestamps\Timestamps;
@@ -42,7 +40,6 @@ class User extends BaseUser implements SanctumUserInterface
      * @var DateTime|null
      */
     protected $updatedAt;
-
 
     /**
      * @return string

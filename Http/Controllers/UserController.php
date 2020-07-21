@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Omed\Laravel\User\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Omed\Laravel\Core\Http\Controllers\Controller;
 use Omed\Laravel\User\Http\Resources\UserResource;
 use Omed\Laravel\User\Services\UserManager;
@@ -35,6 +34,7 @@ class UserController extends Controller
     public function show(UserManager $manager, $user)
     {
         $user = $manager->findById($user);
+
         return new UserResource($user);
     }
 }

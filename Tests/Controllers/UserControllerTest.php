@@ -41,9 +41,9 @@ class UserControllerTest extends UserTestCase
     {
         $user = $this->generateUserData();
         $token = $this->createToken($user);
-        $this->assertStringContainsString('/api/users',route('users.show',['user' => $user->getId()]));
+        $this->assertStringContainsString('/api/users', route('users.show', ['user' => $user->getId()]));
 
-        $response = $this->json('GET', route('users.show',['user' => $user->getId()]), [], [
+        $response = $this->json('GET', route('users.show', ['user' => $user->getId()]), [], [
             'Authorization' => 'Bearer '.$token->plainTextToken,
         ]);
 

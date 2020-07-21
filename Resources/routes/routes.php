@@ -13,9 +13,7 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('api')->group(function(){
+Route::prefix('api')->group(function () {
     Route::middleware('auth:api')
-        ->apiResource(config('omed.user.route_prefix.user'), 'OmedUserController')
-    ;
+        ->apiResource(config('omed.user.route_prefix.user'), 'OmedUserController');
 });
-
