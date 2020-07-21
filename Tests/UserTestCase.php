@@ -13,41 +13,36 @@ declare(strict_types=1);
 
 namespace Omed\Laravel\User\Tests;
 
-use Kilip\Laravel\Alice\AliceServiceProvider;
-use Kilip\Laravel\Alice\Testing\ORM\RefreshDatabaseTrait;
 use Kilip\LaravelDoctrine\ORM\KilipDoctrineServiceProvider;
+use Kilip\LaravelDoctrine\ORM\Testing\ORMTestTrait;
 use Kilip\SanctumORM\SanctumORMServiceProvider;
 use Laravel\Sanctum\SanctumServiceProvider;
 use LaravelDoctrine\Extensions\GedmoExtensionsServiceProvider;
 use LaravelDoctrine\ORM\DoctrineServiceProvider;
 use Omed\Component\User\Model\UserInterface;
-use Omed\Laravel\ORM\Testing\ORMTestCase;
 use Omed\Laravel\Security\SecurityServiceProvider;
 use Omed\Laravel\User\Model\User;
 use Omed\Laravel\User\SecurityEventServiceProvider;
 use Omed\Laravel\User\Testing\UserManagerTrait;
 use Omed\Laravel\User\UserServiceProvider;
-use Tymon\JWTAuth\Providers\LaravelServiceProvider as JWTAuthServiceProvider;
+use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
-class UserTestCase extends ORMTestCase
+class UserTestCase extends OrchestraTestCase
 {
-    use UserManagerTrait;
-    use RefreshDatabaseTrait;
+    use UserManagerTrait, ORMTestTrait;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->refreshDatabase();
+        $this->recreateDatabase();
     }
 
     protected function getPackageProviders($app)
     {
         return [
-            JWTAuthServiceProvider::class,
             DoctrineServiceProvider::class,
             GedmoExtensionsServiceProvider::class,
             KilipDoctrineServiceProvider::class,
-            AliceServiceProvider::class,
             SanctumServiceProvider::class,
             SanctumORMServiceProvider::class,
             SecurityServiceProvider::class,

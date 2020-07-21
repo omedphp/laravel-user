@@ -1,0 +1,38 @@
+{
+  "name": "omed/laravel-user",
+  "description": "Laravel User Package for Omed Project",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Anthonius Munthi",
+      "email": "me@itstoni.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "config": {
+    "preferred-install": "dist",
+    "sort-packages": true
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0-dev"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "Omed\\Laravel\\User\\": "./"
+    }
+  },
+  "require": {
+    "php": "^7.2",
+    "omed/laravel-security": "^1.0@dev",
+    "omed/user-component": "^1.0@dev"
+  },
+  "require-dev": {
+    "gedmo/doctrine-extensions": "^2.4",
+    "orchestra/testbench": "^5.0",
+    "phpunit/phpunit": "^8.5.8"
+  }
+}
