@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Omed\Laravel\User;
 
 use Doctrine\Persistence\ObjectManager;
-use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\ServiceProvider;
@@ -31,7 +30,7 @@ use Symfony\Component\Security\Core\Encoder\EncoderFactory;
 
 class UserServiceProvider extends ServiceProvider
 {
-    public function boot(Filesystem $filesystem): void
+    public function boot(): void
     {
         if (\function_exists('config_path')) {
             // function not available and 'publish' not relevant in Lumen

@@ -29,7 +29,8 @@ use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
 class UserTestCase extends OrchestraTestCase
 {
-    use UserManagerTrait, ORMTestTrait;
+    use UserManagerTrait;
+    use ORMTestTrait;
 
     protected function setUp(): void
     {

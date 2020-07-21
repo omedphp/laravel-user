@@ -22,7 +22,7 @@
         <env name="DB_FOREIGN_KEYS" value="true"/>
     </php>
     <testsuites>
-        <testsuite name="Omed User Component Test Suite">
+        <testsuite name="Omed Laravel User Package Test Suite">
             <directory suffix="Test.php">./Tests</directory>
         </testsuite>
     </testsuites>
