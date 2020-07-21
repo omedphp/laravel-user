@@ -13,13 +13,16 @@ declare(strict_types=1);
 
 namespace Omed\Laravel\User\Testing;
 
+use Kilip\SanctumORM\Contracts\SanctumUserInterface;
 use Kilip\SanctumORM\Manager\TokenManagerInterface;
+use Omed\Component\User\Model\UserInterface;
 use Omed\Laravel\User\Services\UserManager;
 
 trait UserManagerTrait
 {
     /**
      * @return UserManager
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function getUserManager()
     {
@@ -32,5 +35,17 @@ trait UserManagerTrait
     public function getTokenManager()
     {
         return app()->get(TokenManagerInterface::class);
+    }
+
+    /**
+     * @param SanctumUserInterface $user
+     * @param string $name
+     * @param array $abilities
+     *
+     * @return \Kilip\SanctumORM\Security\NewAccessToken
+     */
+    public function createToken(SanctumUserInterface $user, $name = 'phpunit', $abilities = ['*'])
+    {
+        return $this->getTokenManager()->createToken($user, $name, $abilities);
     }
 }

@@ -81,7 +81,8 @@ class UserTestCase extends OrchestraTestCase
     }
 
     /**
-     * @return UserInterface
+     * @return object|UserInterface|null
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     protected function generateUserData()
     {

@@ -9,8 +9,8 @@
                 <lifecycle-callback type="preFlush" method="preFlushHandler"/>
             </entity-listener>
         </entity-listeners>
-        <id name="id" column="id" type="integer">
-            <generator strategy="AUTO"/>
+        <id name="id" column="id" type="string">
+            <generator strategy="UUID"/>
         </id>
         <field name="createdAt" column="created_at" type="datetime" nullable="true">
             <gedmo:timestampable on="create"/>

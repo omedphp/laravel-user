@@ -11,9 +11,11 @@
 
 declare(strict_types=1);
 
-namespace Omed\Laravel\User\Controllers;
+namespace Omed\Laravel\User\Http\Controllers;
 
-use Omed\Laravel\User\Model\Resource\UserResource;
+use Illuminate\Http\Request;
+use Omed\Laravel\Core\Http\Controllers\Controller;
+use Omed\Laravel\User\Http\Resources\UserResource;
 use Omed\Laravel\User\Services\UserManager;
 
 class UserController extends Controller
@@ -28,5 +30,11 @@ class UserController extends Controller
         $collection = $manager->findAll();
 
         return UserResource::collection($collection);
+    }
+
+    public function show(UserManager $manager, $user)
+    {
+        $user = $manager->findById($user);
+        return new UserResource($user);
     }
 }

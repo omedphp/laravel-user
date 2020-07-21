@@ -27,7 +27,7 @@ class UserManager extends BaseUserManager
         /** @var \Doctrine\Persistence\ManagerRegistry $registry */
         $canonicalizer = new Canonicalizer();
         $fieldsUpdater = new CanonicalFieldsUpdater($canonicalizer, $canonicalizer);
-        $userClass = config('omed_user.models.user');
+        $userClass = config('omed.user.models.user');
         $passwordUpdater = app()->get(PasswordUpdater::class);
 
         parent::__construct(

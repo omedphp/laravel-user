@@ -11,14 +11,11 @@
 
 declare(strict_types=1);
 
-return [
-    'route_prefix' => [
-        'user' => 'users'
-    ],
-    'models' => [
-        'user' => \Omed\Laravel\User\Model\User::class,
-        'permission' => '',
-        'role' => '',
-    ],
-    'manager_name' => 'default',
-];
+use Illuminate\Support\Facades\Route;
+
+Route::prefix('api')->group(function(){
+    Route::middleware('auth:api')
+        ->apiResource(config('omed.user.route_prefix.user'), 'OmedUserController')
+    ;
+});
+

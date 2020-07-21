@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace Omed\Laravel\User\Model;
 
 use DateTime;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 use Kilip\SanctumORM\Contracts\SanctumUserInterface;
 use Kilip\SanctumORM\Model\SanctumUserTrait;
 use LaravelDoctrine\Extensions\Timestamps\Timestamps;
@@ -27,6 +29,11 @@ class User extends BaseUser implements SanctumUserInterface
     use Timestamps;
 
     /**
+     * @var string
+     */
+    protected $id;
+
+    /**
      * @var DateTime|null
      */
     protected $createdAt;
@@ -36,22 +43,21 @@ class User extends BaseUser implements SanctumUserInterface
      */
     protected $updatedAt;
 
+
+    /**
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
     /**
      * @return string|null
      */
     public function getPassword()
     {
         return $this->password;
-    }
-
-    public function getJWTIdentifier()
-    {
-        return $this->getId();
-    }
-
-    public function getJWTCustomClaims()
-    {
-        return [];
     }
 
     /**

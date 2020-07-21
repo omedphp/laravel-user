@@ -22,18 +22,34 @@ class UserControllerTest extends UserTestCase
 
     public function testUnauthenticatedUserAccess()
     {
-        $response = $this->json('GET', route('omed_user.index'));
+        $response = $this->json('GET', route('users.index'));
         $response->assertStatus(401);
     }
 
     public function testIndex()
     {
+        $this->assertStringContainsString('/api/users', route('users.index'));
         $user = $this->generateUserData();
-        $token = $this->getTokenManager()->createToken($user, 'phpunit');
-        $response = $this->json('GET', route('omed_user.index'), [], [
+        $token = $this->createToken($user);
+        $response = $this->json('GET', route('users.index'), [], [
+            'Authorization' => 'Bearer '.$token->plainTextToken,
+        ]);
+        $response->assertStatus(200);
+    }
+
+    public function testShow()
+    {
+        $user = $this->generateUserData();
+        $token = $this->createToken($user);
+        $this->assertStringContainsString('/api/users',route('users.show',['user' => $user->getId()]));
+
+        $response = $this->json('GET', route('users.show',['user' => $user->getId()]), [], [
             'Authorization' => 'Bearer '.$token->plainTextToken,
         ]);
 
         $response->assertStatus(200);
+
+        $this->assertEquals($user->getUsername(), $response->json('data.username'));
+        $this->assertEquals($user->getEmail(), $response->json('data.email'));
     }
 }

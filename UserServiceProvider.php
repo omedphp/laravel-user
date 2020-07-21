@@ -22,7 +22,7 @@ use LaravelDoctrine\ORM\IlluminateRegistry;
 use Omed\Component\User\Manager\UserManagerInterface;
 use Omed\Component\User\UserComponent;
 use Omed\Laravel\Security\Controller\AuthController;
-use Omed\Laravel\User\Controllers\UserController;
+use Omed\Laravel\User\Http\Controllers\UserController;
 use Omed\Laravel\User\Model\User;
 use Omed\Laravel\User\Services\PasswordUpdater;
 use Omed\Laravel\User\Services\UserManager;
@@ -35,12 +35,12 @@ class UserServiceProvider extends ServiceProvider
         if (\function_exists('config_path')) {
             // function not available and 'publish' not relevant in Lumen
             $this->publishes([
-                __DIR__.'/Resources/config/user.php' => config_path('omed_user.php'),
+                __DIR__.'/Resources/config/user.php' => config_path('omed/user.php'),
             ], 'config');
         }
 
         $app = $this->app;
-        $this->loadRoutesFrom(__DIR__.'/Resources/config/routes.php');
+        $this->loadRoutesFrom(__DIR__.'/Resources/routes/routes.php');
 
         $app->bind(PasswordUpdater::class, function ($app) {
             $encoderFactory = new EncoderFactory(['user' => [
@@ -53,7 +53,7 @@ class UserServiceProvider extends ServiceProvider
 
         $app->singleton(UserManager::class, function (Application $app) {
             /** @var string $userModel */
-            $userModel = config('omed_user.models.user');
+            $userModel = config('omed.user.models.user');
             /** @var IlluminateRegistry $registry */
             $registry = $app->get('registry');
 
@@ -72,14 +72,13 @@ class UserServiceProvider extends ServiceProvider
         config(['hashing.driver' => 'omed_encryption']);
 
         $app->alias(UserController::class, 'OmedUserController');
-        $app->alias(AuthController::class, 'OmedAuthController');
     }
 
     public function register(): void
     {
         $this->mergeConfigFrom(
             __DIR__.'/Resources/config/user.php',
-            'omed_user'
+            'omed.user'
         );
 
         $this->configureDoctrine();
@@ -113,7 +112,7 @@ class UserServiceProvider extends ServiceProvider
             ],
         ];
 
-        $configKey = 'doctrine.managers.'.config('omed_user.manager_name', 'default').'.mappings';
+        $configKey = 'doctrine.managers.'.config('omed.user.manager_name', 'default').'.mappings';
 
         config([
             $configKey => array_merge(
