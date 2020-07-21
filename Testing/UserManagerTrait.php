@@ -13,29 +13,24 @@ declare(strict_types=1);
 
 namespace Omed\Laravel\User\Testing;
 
-use Omed\Component\User\Model\UserInterface;
+use Kilip\SanctumORM\Manager\TokenManagerInterface;
 use Omed\Laravel\User\Services\UserManager;
-use Tymon\JWTAuth\JWT;
 
 trait UserManagerTrait
 {
-    /**
-     * @param UserInterface $user
-     *
-     * @return string|null
-     */
-    public function generateToken(UserInterface $user)
-    {
-        $jwt = app()->get(JWT::class);
-
-        return $jwt->fromUser($user);
-    }
-
     /**
      * @return UserManager
      */
     public function getUserManager()
     {
-        return app()->get('omed.managers.user');
+        return app()->make('omed.managers.user');
+    }
+
+    /**
+     * @return TokenManagerInterface
+     */
+    public function getTokenManager()
+    {
+        return app()->get(TokenManagerInterface::class);
     }
 }

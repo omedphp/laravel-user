@@ -18,8 +18,10 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\ServiceProvider;
+use Kilip\SanctumORM\Contracts\SanctumUserInterface;
 use LaravelDoctrine\ORM\IlluminateRegistry;
 use Omed\Component\User\Manager\UserManagerInterface;
+use Omed\Component\User\UserComponent;
 use Omed\Laravel\Security\Controller\AuthController;
 use Omed\Laravel\User\Controllers\UserController;
 use Omed\Laravel\User\Model\User;
@@ -50,7 +52,7 @@ class UserServiceProvider extends ServiceProvider
             return new PasswordUpdater($encoderFactory);
         });
 
-        $app->bind(UserManager::class, function (Application $app) {
+        $app->singleton(UserManager::class, function (Application $app) {
             /** @var string $userModel */
             $userModel = config('omed_user.models.user');
             /** @var IlluminateRegistry $registry */
@@ -80,7 +82,15 @@ class UserServiceProvider extends ServiceProvider
             __DIR__.'/Resources/config/user.php',
             'omed_user'
         );
+
         $this->configureDoctrine();
+    }
+
+    public function provides()
+    {
+        return [
+            UserManagerInterface::class,
+        ];
     }
 
     public static function getDoctrineXMLSchemaPath()
@@ -92,13 +102,34 @@ class UserServiceProvider extends ServiceProvider
     {
         /** @var \Illuminate\Config\Repository $config */
         $config = $this->app['config'];
-        $managerConfig = config('omed_user.doctrine_manager_config');
 
-        $config->set('auth.model', User::class);
-        $config->set('auth.defaults.guard', 'api');
-        $config->set('auth.guards.api.driver', 'jwt');
+        $mappings = [
+            'Omed\\Component\\User\\Model' => [
+                'type' => 'xml',
+                'dir' => UserComponent::getDoctrineXMLSchemaPath(),
+            ],
+            'Omed\\Laravel\\User\\Model' => [
+                'type' => 'xml',
+                'dir' => self::getDoctrineXMLSchemaPath(),
+            ],
+        ];
+
+        $configKey = 'doctrine.managers.'.config('omed_user.manager_name', 'default').'.mappings';
+
+        config([
+            $configKey => array_merge(
+                $mappings,
+                config($configKey, [])
+            ),
+            'doctrine.resolve_target_entities' => array_merge(
+                [
+                    SanctumUserInterface::class => User::class,
+                ],
+                config('doctrine.resolve_target_entities', [])
+            ),
+        ]);
+
         $config->set('auth.providers.users.model', User::class);
         $config->set('auth.providers.users.driver', 'doctrine');
-        $config->set('doctrine.managers.omed_user', $managerConfig);
     }
 }

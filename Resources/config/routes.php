@@ -23,6 +23,6 @@ Route::group([
     Route::post('me', 'OmedAuthController@me')->name('omed.auth.profile');
 });
 
-Route::middleware('auth:api')->resource('omed_user', 'OmedUserController', [
+Route::middleware('auth:sanctum')->resource('omed_user', 'OmedUserController', [
     'path' => config('omed_user.route_prefix.user'),
 ]);

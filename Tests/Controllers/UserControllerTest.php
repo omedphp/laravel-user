@@ -29,10 +29,9 @@ class UserControllerTest extends UserTestCase
     public function testIndex()
     {
         $user = $this->generateUserData();
-        $token = $this->generateToken($user);
-
+        $token = $this->getTokenManager()->createToken($user, 'phpunit');
         $response = $this->json('GET', route('omed_user.index'), [], [
-            'Authorization' => 'Bearer '.$token,
+            'Authorization' => 'Bearer '.$token->plainTextToken,
         ]);
 
         $response->assertStatus(200);
