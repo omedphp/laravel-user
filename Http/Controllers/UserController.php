@@ -34,6 +34,7 @@ class UserController extends Controller
     public function show(UserManager $manager, $user)
     {
         $user = $manager->findById($user);
+        $config = config();
 
         return new UserResource($user);
     }

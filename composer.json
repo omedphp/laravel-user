@@ -32,7 +32,6 @@
   },
   "require": {
     "php": "^7.2",
-    "kilip/laravel-doctrine-orm": "^1.0@dev",
     "omed/laravel-core": "^1.0@dev",
     "omed/laravel-security": "^1.0@dev",
     "omed/user-component": "^1.0@dev"
